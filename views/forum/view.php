@@ -29,15 +29,13 @@
             <?php foreach($forum->topics as $topic): ?>
         <tr>
             <td class="forum_icon">
-                        <?php echo $topic->sticky ? image('pin.png', 'forums') : image('folder.png', 'forums'); ?>
+                        <?php echo $topic->sticky ? Asset::img('module::pin.png', 'forums') : Asset::img('module::folder.png', 'forums'); ?>
             </td>
             <td valign="top">
                         <?php echo $topic->sticky ? '<span class="sticky">Sticky: </span>' : ''; ?>
                 <strong><?php echo anchor('forums/topics/view/'.$topic->id, $topic->title);?></strong><br/>
                <span class="description">Author : 
-                    <?php
-                    $this->load->model('users/users_m');
-                    echo $this->users_m->get(array('id' => $topic->author_id))->full_name;
+                    <?php echo user_displayname($topic->author_id,TRUE);
                     ?>
                </span>
             </td>
@@ -45,7 +43,7 @@
             <td class="center_col"><?php echo $topic->view_count?></td>
             <td class="lastpost_info">
                         <?php if(!empty($topic->last_post)):?>
-			Posted: <?php echo anchor('forums/posts/view_reply/'.$topic->last_post->id, date('m.d.y g:i a', $topic->last_post->created_on)); ?><br/>
+			<?php echo anchor('forums/posts/view_reply/'.$topic->last_post->id, date('M j Y | g:i a', $topic->last_post->created_on)); ?><br/>
 			Author: <?php echo $topic->last_post->author->full_name; ?>
                         <?php endif;?>
             </td>

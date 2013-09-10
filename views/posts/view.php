@@ -18,17 +18,17 @@
         <tr class="postinfo">
             <td width="20%">
                     <?php
-                    if($this->settings->item('enable_profiles')):
+                    if(Settings::get('enable_profiles')):
                         echo anchor('user/'.$post->author->id, $post->author->full_name);
                     else:
                         echo $post->author->full_name;
                     endif;
                     ?>
             </td>
-            <td width="50%">Posted: <?php echo date("m.d.y \a\\t g.i a", $post->created_on);?></td>
+            <td width="50%">{{ helper:date format="D M j Y - g:i a" timestamp="<?php echo $post->created_on ?>"}}</td>
                 <?php if($post->parent_id == 0): ?>
             <td width="30%" class="postreport">
-		[ <?php echo anchor('forums/posts/report/'.$post->id, 'Report');?> ]
+	<!--	[ <?php echo anchor('forums/posts/report/'.$post->id, 'Report');?> ] -->
                         <?php if($this->ion_auth->is_admin() && !$topic->sticky): ?>
 		[ <?php echo anchor('forums/topics/stick/'.$post->id, 'Make Sticky');?> ]
                         <?php elseif($this->ion_auth->is_admin() && $topic->sticky == 1): ?>
@@ -36,7 +36,7 @@
                         <?php endif; ?>
             </td>
                 <?php else: ?>
-            <td width="35%" class="postreport">[ <?php echo anchor('forums/posts/report/'.$post->id, 'Report');?> ] [ <?php echo anchor('forums/posts/view_reply/'.$post->id, '# '.$i , array('title' => 'Permalink to this post', 'name' => $post->id));?> ]</td>
+            <td width="35%" class="postreport"><!-- [ <?php echo anchor('forums/posts/report/'.$post->id, 'Report');?> ] --> [ <?php echo anchor('forums/posts/view_reply/'.$post->id, '# '.$i , array('title' => 'Permalink to this post', 'name' => $post->id));?> ]</td>
                 <?php endif; ?>
         </tr>
 
@@ -47,8 +47,7 @@
                 </a>
 
                 <p>
-			Joined Date:
-                        <?php echo date("m.d.y", $post->author->created_on);?>
+			Joined: <br><?php echo date("M j Y", $post->author->created_on);?>
                 </p>
                 <p>
 			Posts:
@@ -95,8 +94,8 @@
     <br clear="both" />
 </div>
 
-   <?php if ($this->user->group == 'site-administrator' || $this->user->group == 'admin' ): ?>
+   <?php if ($this->current_user->group == 'site-administrator' || $this->current_user->group == 'admin' ): ?>
             <br/><br/>   
-            <hr style="color:#ccc;padding:5px 0px; margin:0 10px; width:200px;"/>
-            <a style="color:#69A2CD; padding-left:10px;" href="<?php echo site_url("admin/posts/edit/$post->id") ?>" >Edit this post</a>
+          <!--  <hr style="color:#ccc;padding:5px 0px; margin:0 10px; width:200px;"/>
+            <a style="color:#69A2CD; padding-left:10px;" href="<?php echo site_url("admin/posts/edit/$post->id") ?>" >Edit this post</a> -->
          <?php endif; ?>

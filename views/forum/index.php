@@ -19,7 +19,7 @@
 
                 <?php foreach($category->forums as $forum): ?>
         <tr>
-            <td class="forum_icon"><?php echo image('folder.png', 'forums'); ?></td>
+            <td class="forum_icon"><?php echo Asset::img('module::folder.png', 'Forum'); ?></td>
             <td>
                 <b><?php echo anchor('forums/view/'.$forum->id, $forum->title);?></b><br/>
                 <span class="description"><?php echo $forum->description;?></span>
@@ -29,7 +29,7 @@
             <td class="lastpost_info">
                             <?php if(isset($forum->last_post->title)):?>
                                 <?php echo anchor('forums/posts/view_reply/'.$forum->last_post->id, $forum->last_post->title); ?><br/>
-		Posted: <?php echo date('m.y g:i a', $forum->last_post->created_on); ?><br/>
+		{{ helper:date format="M j Y | g:i a" timestamp="<?php echo $forum->last_post->created_on ?>"}}<br/>
 		Author: <?php echo $forum->last_post->author->full_name; ?>
                             <?php endif;?>
             </td>
